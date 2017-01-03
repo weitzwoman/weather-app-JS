@@ -5,6 +5,20 @@ exports.apiKey = "8a8261f1d3d4a1ab505d37111aa05d7f";
 var apiKey = require('./../.env').apiKey;
 
 $(document).ready(function(){
+  $('#tempLocation').click(function() {
+    var city = $('#location').val();
+    $('#location').val("");
+    $.get('http://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=' + apiKey).then(function(response) {
+      $('.showWeather').text("The temperature in " + city + " is " + response.main.temp + "degrees(k)" + ".");
+    }).fail(function(error) {
+      $('.showWeather').text(error.responseJSON.message);
+    });
+  });
+});
+
+var apiKey = require('./../.env').apiKey;
+
+$(document).ready(function(){
   $('#weatherLocation').click(function() {
     var city = $('#location').val();
     $('#location').val("");
