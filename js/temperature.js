@@ -7,4 +7,9 @@ Temp.prototype.convertFarenheit = function() {
   return farenheit;
 };
 
+Temp.prototype.convertCelsius = function() {
+  var celsius = (this.temp - 273.15).toFixed();
+  return celsius;
+}
+
 exports.tempModule = Temp;

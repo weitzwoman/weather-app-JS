@@ -11,6 +11,11 @@ Temp.prototype.convertFarenheit = function() {
   return farenheit;
 };
 
+Temp.prototype.convertCelsius = function() {
+  var celsius = (this.temp - 273.15).toFixed();
+  return celsius;
+}
+
 exports.tempModule = Temp;
 
 },{}],3:[function(require,module,exports){
@@ -25,10 +30,9 @@ $(document).ready(function(){
     $.get('http://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=' + apiKey).then(function(response) {
       var kelvin = parseInt(response.main.temp);
       var newTemp = new Temp(kelvin);
-      console.log(newTemp);
-      var farenheit = newTemp.convertFarenheit();
-      console.log(farenheit);
-      $('.showWeather').text("The temperature in " + city + " is " + farenheit + " degrees" + ".");
+      console.log(newTemp);      var farenheit = newTemp.convertFarenheit();
+      var celsius = newTemp.convertCelsius();
+      $('.showWeather').text("The temperature in " + city + " is " + farenheit + " degrees(F)" + " & " + celsius + " degrees(C).");
     }).fail(function(error) {
       $('.showWeather').text(error.responseJSON.message);
     });
