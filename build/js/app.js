@@ -2,14 +2,33 @@
 exports.apiKey = "8a8261f1d3d4a1ab505d37111aa05d7f";
 
 },{}],2:[function(require,module,exports){
+function Temp (kelvin) {
+  this.temp = kelvin;
+}
+
+Temp.prototype.convertFarenheit = function() {
+  var farenheit = (9/5) * (this.temp - 273) + 32;
+  return farenheit;
+};
+
+exports.tempModule = Temp;
+
+},{}],3:[function(require,module,exports){
 var apiKey = require('./../.env').apiKey;
+var Temp = require('./../js/temperature.js').tempModule;
 
 $(document).ready(function(){
   $('#tempLocation').click(function() {
     var city = $('#location').val();
     $('#location').val("");
+
     $.get('http://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=' + apiKey).then(function(response) {
-      $('.showWeather').text("The temperature in " + city + " is " + response.main.temp + "degrees(k)" + ".");
+      var kelvin = parseInt(response.main.temp);
+      var newTemp = new Temp(kelvin);
+      console.log(newTemp);
+      var farenheit = newTemp.convertFarenheit();
+      console.log(farenheit);
+      $('.showWeather').text("The temperature in " + city + " is " + farenheit + " degrees" + ".");
     }).fail(function(error) {
       $('.showWeather').text(error.responseJSON.message);
     });
@@ -31,4 +50,4 @@ $(document).ready(function(){
   });
 });
 
-},{"./../.env":1}]},{},[2]);
+},{"./../.env":1,"./../js/temperature.js":2}]},{},[3]);
