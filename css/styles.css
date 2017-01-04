@@ -1,3 +1,7 @@
 .showCelsiusButton {
   display: none;
 }
+
+.showFarenheitButton {
+  display: none;
+}
